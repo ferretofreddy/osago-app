@@ -4,15 +4,13 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { createClient } from '@/lib/supabase/client';
 import {
     ArrowLeft, MapPin, Navigation, MessageCircle,
     Wifi, Car, PawPrint, Utensils, Bed, Compass,
     TreePine, Pill, Waves, Snowflake, ShowerHead,
 } from 'lucide-react';
-
-// ── Interfaces ────────────────────────────────────────────────────────────────
 
 interface Category {
     name_es: string;
@@ -55,15 +53,13 @@ interface Business {
     longitude: number;
     phone: string;
     whatsapp: string;
-    business_categories: { categories: Category[] }[];
+    categories: Category[];
     business_photos: BusinessPhoto[];
-    business_amenities: { amenities: Amenity[] }[];
-    business_route_types: { route_types: RouteType[] }[];
-    business_payment_methods: { payment_methods: PaymentMethod[] }[];
+    amenities: Amenity[];
+    route_types: RouteType[];
+    payment_methods: PaymentMethod[];
     business_hours: BusinessHour[];
 }
-
-// ── Mapas de íconos ───────────────────────────────────────────────────────────
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
     'utensils': <Utensils style={{ width: 14, height: 14 }} />,
@@ -83,8 +79,6 @@ const AMENITY_ICONS: Record<string, React.ReactNode> = {
     'shower-head': <ShowerHead style={{ width: 20, height: 20 }} />,
 };
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-
 function isOpenNow(hours: BusinessHour[]): boolean {
     if (!hours || hours.length === 0) return false;
     const now = new Date();
@@ -97,20 +91,22 @@ function isOpenNow(hours: BusinessHour[]): boolean {
     return cur >= openH * 60 + openM && cur < closeH * 60 + closeM;
 }
 
-function formatTime(time: string): string {
+// Formato 12h para es/en, 24h para fr/de/it
+function formatTime(time: string, locale: string): string {
     const [h, m] = time.split(':');
     const hour = parseInt(h);
+    if (['fr', 'de', 'it'].includes(locale)) {
+        return `${hour}:${m}`;
+    }
     const ampm = hour >= 12 ? 'pm' : 'am';
     return `${hour % 12 || 12}:${m}${ampm}`;
 }
 
-// ── Componente ────────────────────────────────────────────────────────────────
-
 export default function PlaceDetailPage() {
     const params = useParams();
     const router = useRouter();
-    // useTranslations con namespace 'place' — lee de messages/{locale}.json → place.*
     const t = useTranslations('place');
+    const locale = useLocale(); // ← detecta /es, /en, /fr, /de, /it
     const [business, setBusiness] = useState<Business | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -122,24 +118,12 @@ export default function PlaceDetailPage() {
                     .from('businesses')
                     .select(`
                         id, name, description_es, latitude, longitude, phone, whatsapp,
-                        business_categories (
-                            categories ( name_es, icon, color_hex )
-                        ),
-                        business_photos (
-                            url, is_primary
-                        ),
-                        business_amenities (
-                            amenities ( name_es, icon )
-                        ),
-                        business_route_types (
-                            route_types ( name_es, warning_es )
-                        ),
-                        business_payment_methods (
-                            payment_methods ( name_es, icon )
-                        ),
-                        business_hours (
-                            day_of_week, opens_at, closes_at, is_closed
-                        )
+                        categories!business_categories ( name_es, icon, color_hex ),
+                        business_photos ( url, is_primary ),
+                        amenities!business_amenities ( name_es, icon ),
+                        route_types!business_route_types ( name_es, warning_es ),
+                        payment_methods!business_payment_methods ( name_es, icon ),
+                        business_hours ( day_of_week, opens_at, closes_at, is_closed )
                     `)
                     .eq('id', params.id)
                     .eq('is_active', true)
@@ -160,7 +144,6 @@ export default function PlaceDetailPage() {
         fetchBusiness();
     }, [params.id]);
 
-    // ── Loading ───────────────────────────────────────────────────────────────
     if (loading) {
         return (
             <div className="min-h-screen bg-[#f9f9ff]">
@@ -174,14 +157,11 @@ export default function PlaceDetailPage() {
         );
     }
 
-    // ── Not found ─────────────────────────────────────────────────────────────
     if (!business) {
         return (
             <div className="min-h-screen bg-[#f9f9ff] flex items-center justify-center">
                 <div className="text-center">
-                    <h2 className="text-xl font-semibold text-[#111c2d] mb-2">
-                        {t('notFound')}
-                    </h2>
+                    <h2 className="text-xl font-semibold text-[#111c2d] mb-2">{t('notFound')}</h2>
                     <button onClick={() => router.back()} className="text-[#005c55] font-medium hover:underline">
                         {t('notFoundBack')}
                     </button>
@@ -190,32 +170,25 @@ export default function PlaceDetailPage() {
         );
     }
 
-    // ── Extraer datos ─────────────────────────────────────────────────────────
-    const category = business.business_categories?.[0]?.categories?.[0];
+    const categories = (business.categories || []) as Category[];
+    const amenities = (business.amenities || []) as Amenity[];
+    const routeTypes = (business.route_types || []) as RouteType[];
+    const paymentMethods = (business.payment_methods || []) as PaymentMethod[];
+    const hours = (business.business_hours || []) as BusinessHour[];
+
+    const category = categories[0];
+    const routeType = routeTypes[0];
     const primaryPhoto = business.business_photos?.find(p => p.is_primary) || business.business_photos?.[0];
-    const routeType = business.business_route_types?.[0]?.route_types?.[0];
-    const amenities = business.business_amenities
-        ?.map(ba => ba.amenities?.[0])
-        .filter(Boolean) as Amenity[];
-    const paymentMethods = business.business_payment_methods
-        ?.map(bp => bp.payment_methods?.[0])
-        .filter(Boolean) as PaymentMethod[];
-    const hours = business.business_hours || [];
     const open = isOpenNow(hours);
     const todayHours = hours.find(h => h.day_of_week === new Date().getDay());
 
-    // ── Render ────────────────────────────────────────────────────────────────
     return (
         <div className="min-h-screen bg-[#f9f9ff]">
 
             {/* Hero Image */}
             <div className="relative h-[45vh] w-full">
                 {primaryPhoto?.url ? (
-                    <img
-                        src={primaryPhoto.url}
-                        alt={business.name}
-                        className="w-full h-full object-cover"
-                    />
+                    <img src={primaryPhoto.url} alt={business.name} className="w-full h-full object-cover" />
                 ) : (
                     <div className="w-full h-full bg-gradient-to-br from-[#e7eeff] to-[#dee8ff]" />
                 )}
@@ -232,12 +205,11 @@ export default function PlaceDetailPage() {
             <div className="-mt-6 relative z-10 pb-28">
                 <div className="bg-[#f9f9ff] rounded-t-3xl shadow-[0_-4px_24px_rgba(0,0,0,0.05)] px-5 pt-6 pb-4">
 
-                    {/* Nombre */}
                     <h1 className="text-[28px] leading-9 font-bold text-[#111c2d] font-['Plus_Jakarta_Sans'] tracking-tight mb-2">
                         {business.name}
                     </h1>
 
-                    {/* Estado abierto/cerrado — desde BD + traducido */}
+                    {/* Estado abierto/cerrado con hora en formato del locale */}
                     <div className="flex items-center gap-2 mb-3">
                         <span style={{
                             width: 10, height: 10, borderRadius: '50%',
@@ -248,13 +220,13 @@ export default function PlaceDetailPage() {
                             {open ? t('openNow') : t('closed')}
                             {todayHours && !todayHours.is_closed && (
                                 <span className="text-[#3e4947] font-normal ml-1">
-                                    · {formatTime(todayHours.opens_at)} – {formatTime(todayHours.closes_at)}
+                                    · {formatTime(todayHours.opens_at, locale)} – {formatTime(todayHours.closes_at, locale)}
                                 </span>
                             )}
                         </span>
                     </div>
 
-                    {/* Badges: categoría + métodos de pago + ruta — desde BD */}
+                    {/* Badges */}
                     <div className="flex flex-wrap gap-2 mb-5">
                         {category && (
                             <span
@@ -265,7 +237,7 @@ export default function PlaceDetailPage() {
                                 {category.name_es}
                             </span>
                         )}
-                        {paymentMethods?.map((pm, i) => (
+                        {paymentMethods.map((pm, i) => (
                             <span key={i} className="px-3 py-1.5 rounded-full text-xs font-semibold text-[#3e4947]"
                                 style={{ backgroundColor: 'rgba(216,227,251,0.6)', border: '1px solid rgba(189,201,198,0.3)' }}>
                                 {pm.name_es}
@@ -279,13 +251,12 @@ export default function PlaceDetailPage() {
                         )}
                     </div>
 
-                    {/* Descripción */}
                     <p className="text-[#3e4947] text-base leading-relaxed mb-6">
                         {business.description_es || t('noDescription')}
                     </p>
 
-                    {/* Servicios Adicionales — desde BD */}
-                    {amenities?.length > 0 && (
+                    {/* Servicios Adicionales */}
+                    {amenities.length > 0 && (
                         <div className="mb-6">
                             <h2 className="text-2xl font-semibold text-[#111c2d] font-['Plus_Jakarta_Sans'] mb-4">
                                 {t('additionalServices')}
@@ -304,7 +275,7 @@ export default function PlaceDetailPage() {
                         </div>
                     )}
 
-                    {/* Ruta y Acceso — desde BD */}
+                    {/* Ruta y Acceso */}
                     {routeType && (
                         <div className="mb-6">
                             <h2 className="text-2xl font-semibold text-[#111c2d] font-['Plus_Jakarta_Sans'] mb-3">
@@ -327,7 +298,7 @@ export default function PlaceDetailPage() {
                         </div>
                     )}
 
-                    {/* Horarios — desde BD + días traducidos */}
+                    {/* Horarios con hora en formato del locale */}
                     {hours.length > 0 && (
                         <div className="mb-2">
                             <h2 className="text-2xl font-semibold text-[#111c2d] font-['Plus_Jakarta_Sans'] mb-3">
@@ -339,7 +310,6 @@ export default function PlaceDetailPage() {
                                     .sort((a, b) => a.day_of_week - b.day_of_week)
                                     .map((h, i) => {
                                         const isToday = h.day_of_week === new Date().getDay();
-                                        // Días traducidos desde messages/{locale}.json → place.days.*
                                         const dayLabel = t(`days.${h.day_of_week}`);
                                         return (
                                             <div key={i}
@@ -351,7 +321,7 @@ export default function PlaceDetailPage() {
                                                 <span style={{ color: isToday ? '#005c55' : '#3e4947' }}>
                                                     {h.is_closed
                                                         ? t('dayClosed')
-                                                        : `${formatTime(h.opens_at)} – ${formatTime(h.closes_at)}`}
+                                                        : `${formatTime(h.opens_at, locale)} – ${formatTime(h.closes_at, locale)}`}
                                                 </span>
                                             </div>
                                         );
