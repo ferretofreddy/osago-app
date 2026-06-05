@@ -16,5 +16,27 @@
         "events": "Events",
         "favorites": "Favorites",
         "profile": "Profile"
+    },
+    "place": {
+        "openNow": "Open now",
+        "closed": "Closed",
+        "notFound": "Place not found",
+        "notFoundBack": "Go back",
+        "noDescription": "No description available.",
+        "additionalServices": "Additional Services",
+        "routeAndAccess": "Route & Access",
+        "schedule": "Hours",
+        "whatsapp": "WhatsApp",
+        "howToGet": "Get directions",
+        "days": {
+            "0": "Sun",
+            "1": "Mon",
+            "2": "Tue",
+            "3": "Wed",
+            "4": "Thu",
+            "5": "Fri",
+            "6": "Sat"
+        },
+        "dayClosed": "Closed"
     }
 }

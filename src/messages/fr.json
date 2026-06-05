@@ -16,5 +16,27 @@
         "events": "Événements",
         "favorites": "Favoris",
         "profile": "Profil"
+    },
+    "place": {
+        "openNow": "Ouvert maintenant",
+        "closed": "Fermé",
+        "notFound": "Lieu introuvable",
+        "notFoundBack": "Retour",
+        "noDescription": "Aucune description disponible.",
+        "additionalServices": "Services Supplémentaires",
+        "routeAndAccess": "Itinéraire et Accès",
+        "schedule": "Horaires",
+        "whatsapp": "WhatsApp",
+        "howToGet": "Itinéraire",
+        "days": {
+            "0": "Dim",
+            "1": "Lun",
+            "2": "Mar",
+            "3": "Mer",
+            "4": "Jeu",
+            "5": "Ven",
+            "6": "Sam"
+        },
+        "dayClosed": "Fermé"
     }
 }

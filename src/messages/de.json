@@ -16,5 +16,27 @@
         "events": "Veranstaltungen",
         "favorites": "Favoriten",
         "profile": "Profil"
+    },
+    "place": {
+        "openNow": "Jetzt geöffnet",
+        "closed": "Geschlossen",
+        "notFound": "Ort nicht gefunden",
+        "notFoundBack": "Zurück",
+        "noDescription": "Keine Beschreibung verfügbar.",
+        "additionalServices": "Zusätzliche Dienste",
+        "routeAndAccess": "Route und Zugang",
+        "schedule": "Öffnungszeiten",
+        "whatsapp": "WhatsApp",
+        "howToGet": "Route",
+        "days": {
+            "0": "So",
+            "1": "Mo",
+            "2": "Di",
+            "3": "Mi",
+            "4": "Do",
+            "5": "Fr",
+            "6": "Sa"
+        },
+        "dayClosed": "Geschlossen"
     }
 }
