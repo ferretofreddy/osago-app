@@ -1,0 +1,20 @@
+{
+    "common": {
+        "appName": "OsaGo",
+        "loading": "Laden...",
+        "error": "Fehler",
+        "retry": "Wiederholen"
+    },
+    "home": {
+        "title": "Entdecken Sie die Osa-Halbinsel",
+        "subtitle": "Ihr virtueller Reiseführer in Puerto Jiménez",
+        "nearYou": "In Ihrer Nähe",
+        "viewAll": "Alle anzeigen"
+    },
+    "nav": {
+        "explore": "Entdecken",
+        "events": "Veranstaltungen",
+        "favorites": "Favoriten",
+        "profile": "Profil"
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "common": {
+        "appName": "OsaGo",
+        "loading": "Caricamento...",
+        "error": "Errore",
+        "retry": "Riprova"
+    },
+    "home": {
+        "title": "Esplora la Penisola di Osa",
+        "subtitle": "La tua guida virtuale a Puerto Jiménez",
+        "nearYou": "Vicino a te",
+        "viewAll": "Vedi tutti"
+    },
+    "nav": {
+        "explore": "Esplora",
+        "events": "Eventi",
+        "favorites": "Preferiti",
+        "profile": "Profilo"
+    }
+}

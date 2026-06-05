@@ -1,0 +1,46 @@
+/* Google Fonts - DEBE IR PRIMERO */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+/* Tailwind Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variables CSS */
+:root {
+  --background: #f9f9ff;
+  --foreground: #111c2d;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Leaflet fixes */
+.leaflet-container {
+  font-family: 'Inter', sans-serif !important;
+  z-index: 1;
+}
+
+.custom-user-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.custom-business-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better tap highlights on mobile */
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
