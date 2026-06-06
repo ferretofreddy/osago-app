@@ -9,7 +9,9 @@
         "title": "Entdecken Sie die Osa-Halbinsel",
         "subtitle": "Ihr virtueller Reiseführer in Puerto Jiménez",
         "nearYou": "In Ihrer Nähe",
-        "viewAll": "Alle anzeigen"
+        "viewAll": "Alle anzeigen",
+        "discoverTitle": "Entdecke die Osa",
+        "discoverSubtitle": "Wähle eine Kategorie, um die Naturwunder und lokalen Dienstleistungen der Halbinsel zu erkunden."
     },
     "nav": {
         "explore": "Entdecken",

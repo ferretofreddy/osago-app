@@ -9,7 +9,9 @@
         "title": "Explore the Osa Peninsula",
         "subtitle": "Your virtual guide in Puerto Jiménez",
         "nearYou": "Near you",
-        "viewAll": "View all"
+        "viewAll": "View all",
+        "discoverTitle": "Discover Osa",
+        "discoverSubtitle": "Select a category to begin exploring the natural wonders and local services of the peninsula."
     },
     "nav": {
         "explore": "Explore",
