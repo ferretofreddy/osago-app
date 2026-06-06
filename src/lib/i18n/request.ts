@@ -9,8 +9,12 @@ export default getRequestConfig(async ({ requestLocale }) => {
         locale = defaultLocale;
     }
 
+    const msgs = (await import(`../../messages/${locale}.json`)).default;
+
     return {
         locale,
-        messages: (await import(`../../messages/${locale}.json`)).default
+        messages: msgs,
+        // include available namespaces to avoid "Missing namespace" errors
+        namespaces: Object.keys(msgs)
     };
 });
