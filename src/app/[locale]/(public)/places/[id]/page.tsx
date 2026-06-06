@@ -11,6 +11,8 @@ import {
     Wifi, Car, PawPrint, Utensils, Bed, Compass,
     TreePine, Pill, Waves, Snowflake, ShowerHead,
 } from 'lucide-react';
+import PlaceGallery from '@/components/place/PlaceGallery';
+import ReviewsSection from '@/components/place/ReviewsSection';
 
 interface Category {
     name_es: string;
@@ -91,7 +93,6 @@ function isOpenNow(hours: BusinessHour[]): boolean {
     return cur >= openH * 60 + openM && cur < closeH * 60 + closeM;
 }
 
-// Formato 12h para es/en, 24h para fr/de/it
 function formatTime(time: string, locale: string): string {
     const [h, m] = time.split(':');
     const hour = parseInt(h);
@@ -106,7 +107,7 @@ export default function PlaceDetailPage() {
     const params = useParams();
     const router = useRouter();
     const t = useTranslations('place');
-    const locale = useLocale(); // ← detecta /es, /en, /fr, /de, /it
+    const locale = useLocale();
     const [business, setBusiness] = useState<Business | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -178,38 +179,38 @@ export default function PlaceDetailPage() {
 
     const category = categories[0];
     const routeType = routeTypes[0];
-    const primaryPhoto = business.business_photos?.find(p => p.is_primary) || business.business_photos?.[0];
     const open = isOpenNow(hours);
     const todayHours = hours.find(h => h.day_of_week === new Date().getDay());
 
     return (
-        <div className="min-h-screen bg-[#f9f9ff]">
+        <div className="min-h-screen bg-[#f9f9ff] relative">
 
-            {/* Hero Image */}
-            <div className="relative h-[45vh] w-full">
-                {primaryPhoto?.url ? (
-                    <img src={primaryPhoto.url} alt={business.name} className="w-full h-full object-cover" />
-                ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-[#e7eeff] to-[#dee8ff]" />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-[#f9f9ff]" />
-                <button
-                    onClick={() => router.back()}
-                    className="absolute top-5 left-5 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white border border-white/20 shadow-lg transition-transform active:scale-95"
-                >
-                    <ArrowLeft style={{ width: 20, height: 20 }} />
-                </button>
+            {/* Galería de Fotos */}
+            <div className="px-5 pt-5">
+                <PlaceGallery
+                    photos={business.business_photos || []}
+                    businessName={business.name}
+                />
             </div>
+
+            {/* Botón volver — fixed sobre la galería */}
+            <button
+                onClick={() => router.back()}
+                className="fixed top-5 left-5 z-50 w-10 h-10 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white border border-white/20 shadow-lg transition-transform active:scale-95"
+            >
+                <ArrowLeft style={{ width: 20, height: 20 }} />
+            </button>
 
             {/* Tarjeta flotante */}
             <div className="-mt-6 relative z-10 pb-28">
                 <div className="bg-[#f9f9ff] rounded-t-3xl shadow-[0_-4px_24px_rgba(0,0,0,0.05)] px-5 pt-6 pb-4">
 
+                    {/* Nombre */}
                     <h1 className="text-[28px] leading-9 font-bold text-[#111c2d] font-['Plus_Jakarta_Sans'] tracking-tight mb-2">
                         {business.name}
                     </h1>
 
-                    {/* Estado abierto/cerrado con hora en formato del locale */}
+                    {/* Estado abierto/cerrado */}
                     <div className="flex items-center gap-2 mb-3">
                         <span style={{
                             width: 10, height: 10, borderRadius: '50%',
@@ -251,6 +252,7 @@ export default function PlaceDetailPage() {
                         )}
                     </div>
 
+                    {/* Descripción */}
                     <p className="text-[#3e4947] text-base leading-relaxed mb-6">
                         {business.description_es || t('noDescription')}
                     </p>
@@ -298,9 +300,9 @@ export default function PlaceDetailPage() {
                         </div>
                     )}
 
-                    {/* Horarios con hora en formato del locale */}
+                    {/* Horarios */}
                     {hours.length > 0 && (
-                        <div className="mb-2">
+                        <div className="mb-6">
                             <h2 className="text-2xl font-semibold text-[#111c2d] font-['Plus_Jakarta_Sans'] mb-3">
                                 {t('schedule')}
                             </h2>
@@ -329,6 +331,9 @@ export default function PlaceDetailPage() {
                             </div>
                         </div>
                     )}
+
+                    {/* ── Reseñas ── */}
+                    <ReviewsSection businessId={business.id} />
 
                 </div>
             </div>

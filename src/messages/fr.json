@@ -38,5 +38,28 @@
             "6": "Sam"
         },
         "dayClosed": "Fermé"
+    },
+    "reviews": {
+        "title": "Avis",
+        "writeReview": "Écrire un avis",
+        "review": "avis",
+        "reviews": "avis",
+        "verified": "Vérifié",
+        "formTitle": "Écrivez votre avis",
+        "labelRating": "Note",
+        "labelName": "Votre nom",
+        "placeholderName": "Ex : Marie Dupont",
+        "labelTitle": "Titre (facultatif)",
+        "placeholderTitle": "Ex : Excellente expérience",
+        "labelComment": "Votre avis",
+        "placeholderComment": "Partagez votre expérience...",
+        "cancel": "Annuler",
+        "send": "Envoyer",
+        "sending": "Envoi...",
+        "errorRating": "Veuillez sélectionner une note.",
+        "errorName": "Veuillez entrer votre nom.",
+        "errorComment": "Veuillez écrire un commentaire.",
+        "errorSubmit": "Erreur lors de l'envoi. Veuillez réessayer.",
+        "empty": "Pas encore d'avis. Soyez le premier à en écrire un !"
     }
 }

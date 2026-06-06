@@ -38,5 +38,28 @@
             "6": "Sáb"
         },
         "dayClosed": "Cerrado"
+    },
+    "reviews": {
+        "title": "Reseñas",
+        "writeReview": "Escribir reseña",
+        "review": "reseña",
+        "reviews": "reseñas",
+        "verified": "Verificado",
+        "formTitle": "Escribe tu reseña",
+        "labelRating": "Calificación",
+        "labelName": "Tu nombre",
+        "placeholderName": "Ej: Juan Pérez",
+        "labelTitle": "Título (opcional)",
+        "placeholderTitle": "Ej: Excelente experiencia",
+        "labelComment": "Tu reseña",
+        "placeholderComment": "Cuéntanos tu experiencia...",
+        "cancel": "Cancelar",
+        "send": "Enviar",
+        "sending": "Enviando...",
+        "errorRating": "Por favor selecciona una calificación.",
+        "errorName": "Por favor ingresa tu nombre.",
+        "errorComment": "Por favor escribe un comentario.",
+        "errorSubmit": "Error al enviar la reseña. Intenta de nuevo.",
+        "empty": "Aún no hay reseñas. ¡Sé el primero en escribir una!"
     }
 }

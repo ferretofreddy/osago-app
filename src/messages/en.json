@@ -38,5 +38,28 @@
             "6": "Sat"
         },
         "dayClosed": "Closed"
+    },
+    "reviews": {
+        "title": "Reviews",
+        "writeReview": "Write a review",
+        "review": "review",
+        "reviews": "reviews",
+        "verified": "Verified",
+        "formTitle": "Write your review",
+        "labelRating": "Rating",
+        "labelName": "Your name",
+        "placeholderName": "E.g. John Smith",
+        "labelTitle": "Title (optional)",
+        "placeholderTitle": "E.g. Great experience",
+        "labelComment": "Your review",
+        "placeholderComment": "Tell us about your experience...",
+        "cancel": "Cancel",
+        "send": "Send",
+        "sending": "Sending...",
+        "errorRating": "Please select a rating.",
+        "errorName": "Please enter your name.",
+        "errorComment": "Please write a comment.",
+        "errorSubmit": "Error submitting review. Please try again.",
+        "empty": "No reviews yet. Be the first to write one!"
     }
 }

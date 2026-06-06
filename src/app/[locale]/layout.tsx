@@ -28,7 +28,7 @@ export default async function LocaleLayout({
     const messages = await getMessages();
 
     return (
-        <html lang={locale}>
+        <html lang={locale} data-scroll-behavior="smooth">
             <body className="bg-[#f9f9ff] text-[#111c2d] antialiased">
                 <NextIntlClientProvider messages={messages}>
                     {children}

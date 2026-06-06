@@ -38,5 +38,28 @@
             "6": "Sa"
         },
         "dayClosed": "Geschlossen"
+    },
+    "reviews": {
+        "title": "Bewertungen",
+        "writeReview": "Bewertung schreiben",
+        "review": "Bewertung",
+        "reviews": "Bewertungen",
+        "verified": "Verifiziert",
+        "formTitle": "Schreiben Sie Ihre Bewertung",
+        "labelRating": "Bewertung",
+        "labelName": "Ihr Name",
+        "placeholderName": "z. B. Max Müller",
+        "labelTitle": "Titel (optional)",
+        "placeholderTitle": "z. B. Tolle Erfahrung",
+        "labelComment": "Ihre Bewertung",
+        "placeholderComment": "Teilen Sie Ihre Erfahrung...",
+        "cancel": "Abbrechen",
+        "send": "Senden",
+        "sending": "Wird gesendet...",
+        "errorRating": "Bitte wählen Sie eine Bewertung.",
+        "errorName": "Bitte geben Sie Ihren Namen ein.",
+        "errorComment": "Bitte schreiben Sie einen Kommentar.",
+        "errorSubmit": "Fehler beim Senden. Bitte erneut versuchen.",
+        "empty": "Noch keine Bewertungen. Seien Sie der Erste!"
     }
 }

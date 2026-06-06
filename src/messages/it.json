@@ -38,5 +38,28 @@
             "6": "Sab"
         },
         "dayClosed": "Chiuso"
+    },
+    "reviews": {
+        "title": "Recensioni",
+        "writeReview": "Scrivi una recensione",
+        "review": "recensione",
+        "reviews": "recensioni",
+        "verified": "Verificato",
+        "formTitle": "Scrivi la tua recensione",
+        "labelRating": "Valutazione",
+        "labelName": "Il tuo nome",
+        "placeholderName": "Es. Marco Rossi",
+        "labelTitle": "Titolo (facoltativo)",
+        "placeholderTitle": "Es. Ottima esperienza",
+        "labelComment": "La tua recensione",
+        "placeholderComment": "Raccontaci la tua esperienza...",
+        "cancel": "Annulla",
+        "send": "Invia",
+        "sending": "Invio...",
+        "errorRating": "Seleziona una valutazione.",
+        "errorName": "Inserisci il tuo nome.",
+        "errorComment": "Scrivi un commento.",
+        "errorSubmit": "Errore durante l'invio. Riprova.",
+        "empty": "Ancora nessuna recensione. Sii il primo a scriverne una!"
     }
 }
