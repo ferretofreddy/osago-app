@@ -1,5 +1,4 @@
 // src/app/layout.tsx
-
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -10,8 +9,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return children; // ← Solo devuelve los children, sin <html> ni <body>
+}: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html suppressHydrationWarning>
+      <body suppressHydrationWarning>
+        {children}
+      </body>
+    </html>
+  );
 }
